@@ -2,6 +2,10 @@
 
 defs.qc
 subs.qc
+
+armsrace/armsrace_defs.qc
+armsrace/armsrace_subs.qc
+
 maps.qc
 fight.qc
 ai.qc
@@ -34,3 +38,5 @@ fish.qc			// registered
 shalrath.qc		// registered
 enforcer.qc		// registered
 oldone.qc		// registered
+
+armsrace/armsrace.qc

@@ -1,0 +1,5 @@
+float PEFL_SEEN_INTRO_MESSAGE = 1;
+float PEFL_IGNORE_NEXT_INVULNERABILITY_MESSAGE = 2;
+
+
+float armsrace_lastLevel;

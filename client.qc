@@ -388,6 +388,10 @@ void() ClientKill =
 	set_suicide_frame ();
 	self.modelindex = modelindex_player;
 	self.frags = self.frags - 2;	// extra penalty
+
+	if(self.frags < 0)
+		self.frags = 0;
+
 	respawn ();
 };
 
@@ -500,6 +504,8 @@ void() PutClientInServer =
 
 	DecodeLevelParms ();
 	
+	ArmsRace_GiveWeaponsToPlayer(self);
+
 	W_SetCurrentAmmo ();
 
 	self.attack_finished = time;
@@ -511,6 +517,9 @@ void() PutClientInServer =
 	self.pausetime = 0;
 	
 //	spot = SelectSpawnPoint ();
+
+
+
 
 	self.origin = spot.origin + '0 0 1';
 	self.angles = spot.angles;
@@ -528,6 +537,16 @@ void() PutClientInServer =
 	self.view_ofs = '0 0 22';
 
 	player_stand1 ();
+
+
+	// Grant invulnerability
+	self.items |= IT_INVULNERABILITY;
+	self.invincible_time = 1;
+	self.invincible_finished = time + 3;
+	self.cnt |= PEFL_IGNORE_NEXT_INVULNERABILITY_MESSAGE;
+
+	ArmsRace_PrintSpawnMessage(self);
+
 	
 	if (deathmatch || coop)
 	{
@@ -536,6 +555,9 @@ void() PutClientInServer =
 	}
 
 	spawn_tdeath (self.origin, self);
+
+
+	
 };
 
 
@@ -1002,7 +1024,15 @@ void() CheckPowerups =
 		{
 			if (self.invincible_time == 1)
 			{
-				sprint (self, "Protection is almost burned out\n");
+				if(self.cnt & PEFL_IGNORE_NEXT_INVULNERABILITY_MESSAGE)
+				{
+					self.cnt -= PEFL_IGNORE_NEXT_INVULNERABILITY_MESSAGE;
+				}
+				else 
+				{
+					sprint (self, "Protection is almost burned out\n");
+				}
+				
 				stuffcmd (self, "bf\n");
 				sound (self, CHAN_AUTO, "items/protect2.wav", 1, ATTN_NORM);
 				self.invincible_time = time + 1;
@@ -1110,6 +1140,14 @@ void() PlayerPostThink =
 		return;		// intermission or finale
 	if (self.deadflag)
 		return;
+
+	if(!(self.cnt & PEFL_SEEN_INTRO_MESSAGE))
+	{
+		centerprint(self,"Welcome to Arms-race deathmatch\nScore to get to next level\n\nAny bugs are probably related to the mod\n\nKills per level: ",ftos(ArmsRace_KillsPerLevel()),"\nHave fun!");
+
+		// Mark as message sent
+		self.cnt |= PEFL_SEEN_INTRO_MESSAGE;
+	}
 		
 // do weapon stuff
 
@@ -1151,6 +1189,10 @@ void() ClientConnect =
 	bprint (self.netname);
 	bprint (" entered the game\n");
 	
+
+	self.cnt = 0;
+	self.count = 0;
+
 // a client connecting during an intermission can cause problems
 	if (intermission_running)
 		ExitIntermission ();
@@ -1202,7 +1244,6 @@ void(entity targ, entity attacker) ClientObituary =
 			bprint (attacker.owner.netname);
 			bprint ("\n");
 
-			attacker.owner.frags = attacker.owner.frags + 1;
 			return;
 		}
 
@@ -1212,7 +1253,7 @@ void(entity targ, entity attacker) ClientObituary =
 			bprint (targ.netname);
 			bprint ("'s telefrag\n");
 
-			targ.frags = targ.frags - 1;
+			//targ.frags = targ.frags - 1;
 			return;
 		}
 
@@ -1222,6 +1263,10 @@ void(entity targ, entity attacker) ClientObituary =
 			{
 				// killed self
 				attacker.frags = attacker.frags - 1;
+
+				if(attacker.frags < 0)
+					attacker.frags = 0;
+
 				bprint (targ.netname);
 				
 				if (targ.weapon == 64 && targ.waterlevel > 1)
@@ -1248,12 +1293,18 @@ void(entity targ, entity attacker) ClientObituary =
 				bprint (attacker.netname);
 				bprint (deathstring);
 				attacker.frags = attacker.frags - 1;
+				if(attacker.frags < 0)
+					attacker.frags = 0;
+
 				return;
 			}
 			else
 			{
-				attacker.frags = attacker.frags + 1;
+				local float previousLevel = ArmsRace_GetPlayerLevel(attacker);
 
+				attacker.frags = attacker.frags + 1;
+				
+				
 				rnum = attacker.weapon;
 				if (rnum == IT_AXE)
 				{
@@ -1312,12 +1363,21 @@ void(entity targ, entity attacker) ClientObituary =
 				bprint (deathstring);
 				bprint (attacker.netname);
 				bprint (deathstring2);
+
+				local float currentLevel = ArmsRace_GetPlayerLevel(attacker);
+				if(currentLevel > previousLevel) 
+				{
+					ArmsRace_LevelUp(attacker,currentLevel);
+				}
+
 			}
 			return;
 		}
 		else
 		{
-			targ.frags = targ.frags - 1;
+			//targ.frags = targ.frags - 1;
+			if(targ.frags < 0)
+				targ.frags = 0;
 			bprint (targ.netname);
 
 			// killed by a montser?

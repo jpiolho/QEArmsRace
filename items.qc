@@ -501,6 +501,9 @@ void() weapon_touch =
 
 void() weapon_supershotgun =
 {
+	remove(self);
+	return;
+
 	precache_model ("progs/g_shot.mdl");
 	setmodel (self, "progs/g_shot.mdl");
 	self.weapon = IT_SUPER_SHOTGUN;
@@ -515,6 +518,9 @@ void() weapon_supershotgun =
 
 void() weapon_nailgun =
 {
+	remove(self);
+	return;
+
 	precache_model ("progs/g_nail.mdl");
 	setmodel (self, "progs/g_nail.mdl");
 	self.weapon = IT_NAILGUN;
@@ -529,6 +535,9 @@ void() weapon_nailgun =
 
 void() weapon_supernailgun =
 {
+	remove(self);
+	return;
+
 	precache_model ("progs/g_nail2.mdl");
 	setmodel (self, "progs/g_nail2.mdl");
 	self.weapon = IT_SUPER_NAILGUN;
@@ -543,6 +552,9 @@ void() weapon_supernailgun =
 
 void() weapon_grenadelauncher =
 {
+	remove(self);
+	return;
+
 	precache_model ("progs/g_rock.mdl");
 	setmodel (self, "progs/g_rock.mdl");
 	self.weapon = 3;
@@ -557,6 +569,9 @@ void() weapon_grenadelauncher =
 
 void() weapon_rocketlauncher =
 {
+	remove(self);
+	return;
+
 	precache_model ("progs/g_rock2.mdl");
 	setmodel (self, "progs/g_rock2.mdl");
 	self.weapon = 3;
@@ -572,6 +587,9 @@ void() weapon_rocketlauncher =
 
 void() weapon_lightning =
 {
+	remove(self);
+	return;
+
 	precache_model ("progs/g_light.mdl");
 	setmodel (self, "progs/g_light.mdl");
 	self.weapon = 3;
@@ -1329,6 +1347,7 @@ void() DropBackpack =
 	item = spawn();
 	item.origin = self.origin - '0 0 24';
 	
+	/*
 	item.items = self.weapon;
 	if (item.items == IT_AXE)
 		item.netname = "Axe";
@@ -1348,6 +1367,7 @@ void() DropBackpack =
 		item.netname = "Thunderbolt";
 	else
 		item.netname = "";
+	*/
 
 	item.ammo_shells = self.ammo_shells;
 	item.ammo_nails = self.ammo_nails;

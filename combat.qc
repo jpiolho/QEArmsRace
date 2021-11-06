@@ -213,7 +213,7 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage=
 T_RadiusDamage
 ============
 */
-void(entity inflictor, entity attacker, float damage, entity ignore) T_RadiusDamage =
+void(entity inflictor, entity attacker, float damage, entity ignore, float onlyUnderwater) T_RadiusDamage =
 {
 	local	float 	points;
 	local	entity	head;
@@ -225,23 +225,25 @@ void(entity inflictor, entity attacker, float damage, entity ignore) T_RadiusDam
 	{
 		if (head != ignore)
 		{
-			if (head.takedamage)
-			{
-				org = head.origin + (head.mins + head.maxs)*0.5;
-				points = 0.5*vlen (inflictor.origin - org);
-				if (points < 0)
-					points = 0;
-				points = damage - points;
-				if (head == attacker)
-					points = points * 0.5;
-				if (points > 0)
+			if(!onlyUnderwater || head.waterlevel > 1) {
+				if (head.takedamage)
 				{
-					if (CanDamage (head, inflictor))
-					{	// shambler takes half damage from all explosions
-						if (head.classname == "monster_shambler")						
-							T_Damage (head, inflictor, attacker, points*0.5);
-						else
-							T_Damage (head, inflictor, attacker, points);
+					org = head.origin + (head.mins + head.maxs)*0.5;
+					points = 0.5*vlen (inflictor.origin - org);
+					if (points < 0)
+						points = 0;
+					points = damage - points;
+					if (head == attacker)
+						points = points * 0.5;
+					if (points > 0)
+					{
+						if (CanDamage (head, inflictor))
+						{	// shambler takes half damage from all explosions
+							if (head.classname == "monster_shambler")						
+								T_Damage (head, inflictor, attacker, points*0.5);
+							else
+								T_Damage (head, inflictor, attacker, points);
+						}
 					}
 				}
 			}

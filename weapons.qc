@@ -2,7 +2,7 @@
 */
 void (entity targ, entity inflictor, entity attacker, float damage) T_Damage;
 void () player_run;
-void(entity bomb, entity attacker, float rad, entity ignore) T_RadiusDamage;
+void(entity bomb, entity attacker, float rad, entity ignore, float onlyUnderwater) T_RadiusDamage;
 void(vector org, vector vel, float damage) SpawnBlood;
 void() SuperDamageSound;
 
@@ -49,9 +49,10 @@ void() W_FireAxe =
 
 	if (trace_ent.takedamage)
 	{
+		local float dmg = ArmsRace_GetPlayerLevel(self) == 7 ? 40 : 20;
 		trace_ent.axhitme = 1;
-		SpawnBlood (org, '0 0 0', 20);
-		T_Damage (trace_ent, self, self, 20);
+		SpawnBlood (org, '0 0 0', dmg);
+		T_Damage (trace_ent, self, self, dmg);
 	}
 	else
 	{	// hit wall
@@ -350,7 +351,7 @@ void() T_MissileTouch =
 
 	// don't do radius damage to the other, because all the damage
 	// was done in the impact
-	T_RadiusDamage (self, self.owner, 120, other);
+	T_RadiusDamage (self, self.owner, 120, other, FALSE);
 
 //	sound (self, CHAN_WEAPON, "weapons/r_exp3.wav", 1, ATTN_NORM);
 	self.origin = self.origin - 8*normalize(self.velocity);
@@ -480,7 +481,8 @@ void() W_FireLightning =
 		cells = self.ammo_cells;
 		self.ammo_cells = 0;
 		W_SetCurrentAmmo ();
-		T_RadiusDamage (self, self, 35*cells, world);
+
+		T_RadiusDamage (self, self, 35*cells, world, TRUE);
 		return;
 	}
 
@@ -516,7 +518,7 @@ void() W_FireLightning =
 
 void() GrenadeExplode =
 {
-	T_RadiusDamage (self, self.owner, 120, world);
+	T_RadiusDamage (self, self.owner, 120, world, FALSE);
 
 	WriteByte (MSG_BROADCAST, SVC_TEMPENTITY);
 	WriteByte (MSG_BROADCAST, TE_EXPLOSION);
@@ -1230,12 +1232,19 @@ void() ImpulseCommands =
 
 	if (self.impulse == 9)
 		CheatCommand ();
+	
+	/*
 	if (self.impulse == 10)
 		CycleWeaponCommand ();
+	*/
+	
 	if (self.impulse == 11)
 		ServerflagsCommand ();
+	
+	/*
 	if (self.impulse == 12)
 		CycleWeaponReverseCommand ();
+	*/
 
 	if (self.impulse == 255)
 		QuadCheat ();
