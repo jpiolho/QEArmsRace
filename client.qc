@@ -1347,12 +1347,19 @@ void(entity targ, entity attacker) ClientObituary =
 				}
 				if (rnum == IT_GRENADE_LAUNCHER)
 				{
-					deathstring = " eats ";
-					deathstring2 = "'s pineapple\n";
-					if (targ.health < -40)
+					if(attacker.specialweapon == ARW_FLAME_THROWER)
 					{
-						deathstring = " was gibbed by ";
-						deathstring2 = "'s grenade\n";
+						deathstring = " got burnt into a crisp by ";
+						deathstring2 = "\n";
+					}
+					else {
+						deathstring = " eats ";
+						deathstring2 = "'s pineapple\n";
+						if (targ.health < -40)
+						{
+							deathstring = " was gibbed by ";
+							deathstring2 = "'s grenade\n";
+						}
 					}
 				}
 				if (rnum == IT_ROCKET_LAUNCHER)
@@ -1367,11 +1374,19 @@ void(entity targ, entity attacker) ClientObituary =
 				}
 				if (rnum == IT_LIGHTNING)
 				{
-					deathstring = " accepts ";
-					if (attacker.waterlevel > 1)
-						deathstring2 = "'s discharge\n";
-					else
-						deathstring2 = "'s shaft\n";
+					if(attacker.specialweapon == ARW_LASER)
+					{
+						deathstring = " is full of holes thanks to ";
+						deathstring2 = "'s lasers\n";
+					}
+					else 
+					{
+						deathstring = " accepts ";
+						if (attacker.waterlevel > 1)
+							deathstring2 = "'s discharge\n";
+						else
+							deathstring2 = "'s shaft\n";
+					}
 				}
 				bprint (targ.netname);
 				bprint (deathstring);

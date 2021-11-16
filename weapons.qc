@@ -919,8 +919,16 @@ void() W_Attack =
 	else if (self.weapon == IT_GRENADE_LAUNCHER)
 	{
 		player_rocket1();
-		W_FireGrenade();
-		self.attack_finished = time + 0.6;
+
+		if(self.specialweapon == ARW_FLAME_THROWER)
+		{
+			SW_FireFlameThrower();
+			self.attack_finished = time + 0.15;
+		}
+		else {
+			W_FireGrenade();
+			self.attack_finished = time + 0.6;
+		}
 	}
 	else if (self.weapon == IT_ROCKET_LAUNCHER)
 	{
@@ -930,9 +938,16 @@ void() W_Attack =
 	}
 	else if (self.weapon == IT_LIGHTNING)
 	{
-		player_light1();
-		self.attack_finished = time + 0.1;
-		sound (self, CHAN_AUTO, "weapons/lstart.wav", 1, ATTN_NORM);
+		if(self.specialweapon == ARW_LASER)
+		{
+			SW_FireLaser();
+			self.attack_finished = time + 0.25;
+		}
+		else {
+			player_light1();
+			self.attack_finished = time + 0.1;
+			sound (self, CHAN_AUTO, "weapons/lstart.wav", 1, ATTN_NORM);
+		}
 	}
 };
 

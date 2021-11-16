@@ -295,6 +295,7 @@ void() worldspawn =
 	precache_model ("progs/v_light.mdl");
 	
 	ArmsRace_Precache();
+	Armsrace_Initialize();
 
 //
 // Setup light animation tables. 'a' is total darkness, 'z' is maxbright.

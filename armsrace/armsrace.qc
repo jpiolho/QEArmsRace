@@ -1,9 +1,18 @@
+float armsrace_totalLevels;
+var entity() armsrace_levels[20];
+
 void() ArmsRace_Precache =
 {
-    precache_sound("misc/medkey.wav");
+    precache_sound ("misc/medkey.wav");
     precache_sound ("items/protect.wav");
 	precache_sound ("items/protect2.wav");
 	precache_sound ("items/protect3.wav");
+
+    precache_sound ("enforcer/enfire.wav");
+    precache_sound ("enforcer/enfstop.wav");
+    precache_model ("progs/laser.mdl");
+
+    precache_sound ("buttons/airbut1.wav");
 }
 
 float() ArmsRace_KillsPerLevel =
@@ -20,75 +29,76 @@ float(entity player) ArmsRace_GetPlayerLevel =
 
 string(float level) ArmsRace_GetLevelName =
 {
-    switch(level) {
-        default: return "Unknown";
-        case 0: return "Lightning Gun";
-        case 1: return "Rocket Launcher";
-        case 2: return "Grenade Launcher";
-        case 3: return "Super Nailgun";
-        case 4: return "Nailgun";
-        case 5: return "Super Shotgun";
-        case 6: return "Shotgun";
-        case 7: return "Axe";
-    }
+    if(level < 0 || level >= armsrace_totalLevels)
+        return "Unknown";
+
+    local entity ent = armsrace_levels[level]();
+    local string name = ent.netname;
+    remove(ent);
+
+    return name;
 }
 
 void(entity player) ArmsRace_GiveWeaponsToPlayer =
 {
     // Remove weapons
-    player.items = player.items - (player.items & (IT_AXE | IT_SHOTGUN | IT_SUPER_SHOTGUN | IT_NAILGUN | IT_SUPER_NAILGUN | IT_ROCKET_LAUNCHER | IT_LIGHTNING));
+    player.items -= (player.items & (IT_AXE | IT_SHOTGUN | IT_SUPER_SHOTGUN | IT_NAILGUN | IT_SUPER_NAILGUN | IT_ROCKET_LAUNCHER | IT_LIGHTNING));
+    player.specialweapon = 0;
 
-    switch(ArmsRace_GetPlayerLevel(player)) {
-        case 0:
-            player.items |= IT_LIGHTNING;
-            player.ammo_cells = 200;
-            player.weapon = IT_LIGHTNING;
-            break;
-        case 1:
-            player.items |= IT_ROCKET_LAUNCHER;
-            player.ammo_rockets = 100;
-            player.weapon = IT_ROCKET_LAUNCHER;
-            break;
-        case 2:
-            player.items |= IT_GRENADE_LAUNCHER;
-            player.ammo_rockets = 100;
-            player.weapon = IT_GRENADE_LAUNCHER;
-            break;
-        case 3:
-            player.items |= IT_SUPER_NAILGUN;
-            player.ammo_nails = 200;
-            player.weapon = IT_SUPER_NAILGUN;
-            break;
-        case 4:
-            player.items |= IT_NAILGUN;
-            player.ammo_nails = 200;
-            player.weapon = IT_NAILGUN;
-            break;
-        case 5:
-            player.items |= IT_SUPER_SHOTGUN;
-            player.ammo_shells = 100;
-            player.weapon = IT_SUPER_SHOTGUN;
-            break;
-        case 6:
-            player.items |= IT_SHOTGUN;
-            player.ammo_shells = 100;
-            player.weapon = IT_SHOTGUN;
-            break;
-        case 7:
-            player.items |= IT_AXE;
-            player.weapon = IT_AXE;
-            break;
-        default:
-            dprint("Unknown level!\n");
-            break;
-    }
+    local float level = ArmsRace_GetPlayerLevel(player);
 
+    local entity wep = armsrace_levels[level]();
 
+    player.items |= wep.items;
+    player.weapon = wep.items;
+    player.specialweapon |= wep.specialweapon;
+
+    player.ammo_cells = 200;
+    player.ammo_rockets = 100;
+    player.ammo_nails = 200;
+    player.ammo_shells = 100;
+
+    remove(wep);
+}
+
+void(entity() callback) Armsrace_AddLevel = 
+{
+    armsrace_levels[armsrace_totalLevels++] = callback;
 }
 
 void() Armsrace_Initialize =
 {
-    armsrace_lastLevel = 7;
+    local float weaponSet = cvar("saved1");
+    dprint("Weaponset: ");
+    dprint(ftos(weaponSet));
+    dprint("\n");
+    
+    armsrace_totalLevels = 0;
+
+    
+    
+    if(weaponSet == 0) {
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_LightningGun));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_RocketLauncher));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_GrenadeLauncher));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperNailgun));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Nailgun));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperShotgun));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Shotgun));
+    }
+    else if(weaponSet == 1) {
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_LightningGun));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Flamethrower));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_RocketLauncher));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Laser));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_GrenadeLauncher));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperNailgun));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Nailgun));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperShotgun));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Shotgun));
+    }
+    
+    Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Axe));
 }
 
 
@@ -128,7 +138,7 @@ void(entity player,float level) ArmsRace_LevelUp =
         self = oself;
     }
 
-    if(level != armsrace_lastLevel) {
+    if(level != (armsrace_totalLevels-1)) {
         centerprint(player,"You are now level ",ftos(level+1),"!\n",ArmsRace_GetLevelName(level));
     }
     else {
