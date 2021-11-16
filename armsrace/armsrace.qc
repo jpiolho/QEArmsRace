@@ -1,4 +1,4 @@
-float() ArmsRace_Precache =
+void() ArmsRace_Precache =
 {
     precache_sound("misc/medkey.wav");
     precache_sound ("items/protect.wav");
@@ -21,6 +21,7 @@ float(entity player) ArmsRace_GetPlayerLevel =
 string(float level) ArmsRace_GetLevelName =
 {
     switch(level) {
+        default: return "Unknown";
         case 0: return "Lightning Gun";
         case 1: return "Rocket Launcher";
         case 2: return "Grenade Launcher";

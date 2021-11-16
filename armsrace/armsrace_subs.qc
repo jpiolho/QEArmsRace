@@ -1,4 +1,4 @@
-float() ArmsRace_Precache;
+void() ArmsRace_Precache;
 void(entity player) ArmsRace_GiveWeaponsToPlayer;
 float(entity player) ArmsRace_GetPlayerLevel;
 
