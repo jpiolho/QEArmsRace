@@ -1376,7 +1376,7 @@ void(entity targ, entity attacker) ClientObituary =
 				{
 					if(attacker.specialweapon == ARW_LASER)
 					{
-						deathstring = " is full of holes thanks to ";
+						deathstring = " was made into swiss cheese by ";
 						deathstring2 = "'s lasers\n";
 					}
 					else 

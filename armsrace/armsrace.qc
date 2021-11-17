@@ -69,9 +69,7 @@ void(entity() callback) Armsrace_AddLevel =
 void() Armsrace_Initialize =
 {
     local float weaponSet = cvar("saved1");
-    dprint("Weaponset: ");
-    dprint(ftos(weaponSet));
-    dprint("\n");
+    
     
     armsrace_totalLevels = 0;
 
@@ -85,12 +83,23 @@ void() Armsrace_Initialize =
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Nailgun));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperShotgun));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Shotgun));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Axe));
     }
     else if(weaponSet == 1) {
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_LightningGun));
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Flamethrower));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_RocketLauncher));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Flamethrower));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_GrenadeLauncher));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Laser));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperNailgun));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Nailgun));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperShotgun));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Shotgun));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Axe));
+    }
+    else if(weaponSet == 2) {
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_LightningGun));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_RocketLauncher));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_GrenadeLauncher));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperNailgun));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Nailgun));
@@ -98,7 +107,6 @@ void() Armsrace_Initialize =
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Shotgun));
     }
     
-    Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Axe));
 }
 
 
@@ -119,7 +127,7 @@ void(entity player) ArmsRace_PrintSpawnMessage =
 
 void(entity player,float level) ArmsRace_LevelUp =
 {
-    if(level == 8)
+    if(level == armsrace_totalLevels)
     {
         bprint(player.netname);
         bprint(" scored the winning kill!\n");   

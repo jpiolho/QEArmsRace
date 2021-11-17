@@ -26,9 +26,9 @@ DEFINE_ARMSRACE_WEAPON(Weapon_Flamethrower,"Flamethrower",IT_GRENADE_LAUNCHER,AR
 
 
 
-void(entity target) Flame_DoDamage =
+void(entity target,float direct) Flame_DoDamage =
 {
-    local float dmg = 30 * (1 - (self.frame / 7));
+    local float dmg = (direct ? 50 : 30) * (1 - (self.frame / 7));
 
     traceline(self.origin,target.origin,FALSE,self);
 
@@ -55,7 +55,7 @@ void() Flame_Think =
     while((p = find(p,classname,"player")))
     {
         if(p != self.owner && vlen(p.origin - self.origin) < 16) {
-            Flame_DoDamage(p);
+            Flame_DoDamage(p,FALSE);
         }
     }
 
@@ -76,7 +76,7 @@ void() Flame_Touch =
 	
 	if (other.health)
 	{
-        Flame_DoDamage(other);
+        Flame_DoDamage(other,TRUE);
 	}
 	
 	remove(self);	
