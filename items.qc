@@ -330,14 +330,14 @@ WEAPONS
 
 void() bound_other_ammo =
 {
-	if (other.ammo_shells > 100)
-		other.ammo_shells = 100;
-	if (other.ammo_nails > 200)
-		other.ammo_nails = 200;
-	if (other.ammo_rockets > 100)
-		other.ammo_rockets = 100;		
-	if (other.ammo_cells > 100)
-		other.ammo_cells = 100;		
+	if (other.ammo_shells > 200)
+		other.ammo_shells = 200;
+	if (other.ammo_nails > 400)
+		other.ammo_nails = 400;
+	if (other.ammo_rockets > 200)
+		other.ammo_rockets = 200;		
+	if (other.ammo_cells > 200)
+		other.ammo_cells = 200;		
 };
 
 
