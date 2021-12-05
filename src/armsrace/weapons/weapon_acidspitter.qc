@@ -1,17 +1,17 @@
-void(entity ent) AcidSpitter_Spit_Damage =
+void(entity ent,float dmg) AcidSpitter_Spit_Damage =
 {
-    T_Damage(ent,self,self.owner,8);
+    T_Damage(ent,self,self.owner,dmg);
 
-    if(ent.classname == "player" && ent.deadflag != DEAD_NO) {
+    if(ent.classname == "player" && ent.deadflag == DEAD_NO) {
+        local float waterType = ent.watertype;
+        ent.watertype = CONTENT_SLIME;
+
         local entity oself = self;
         self = ent;
-
-        local float waterType = self.watertype;
-        self.watertype = CONTENT_SLIME;
         PainSound();
-        self.watertype = waterType;
-
         self = oself;
+
+        ent.watertype = waterType;
     }
 }
 
@@ -26,7 +26,7 @@ void() AcidSpitter_Spit_Landed_Think =
 
         if(ent.takedamage != DAMAGE_NO)
         {
-            AcidSpitter_Spit_Damage(ent);
+            AcidSpitter_Spit_Damage(ent,15);
             hit = TRUE;
         }
         ent = ent.chain;
@@ -34,9 +34,15 @@ void() AcidSpitter_Spit_Landed_Think =
 
 
     // Effect + next think
-    local vector v = self.origin;
-    v += self.finalangle * crandom() * 10;
-    particle(v,self.finalangle,63,8);
+    makevectors(self.finalangle);
+
+    local float i;
+    for(i=0;i<4;i++) {
+        local vector v = self.origin;
+        v += (v_forward * 5) + (crandom() * v_right * 10) + (crandom() * v_up * 10);
+        //v += self.finalangle * crandom() * 10;
+        particle(v,self.finalangle,63,4);
+    }
     self.nextthink = time + 0.15;
 
 
@@ -61,7 +67,7 @@ void() AcidSpitter_Spit_Touch =
     sound(self,CHAN_VOICE,"wizard/hit.wav",1, ATTN_NORM);
 
     if(other.takedamage != DAMAGE_NO) {
-        AcidSpitter_Spit_Damage(other);
+        AcidSpitter_Spit_Damage(other,10);
         remove(self);
         return;
     }
@@ -120,6 +126,6 @@ void() SW_FireAcidSpitter
         newmis.touch = AcidSpitter_Spit_Touch;
     }
 
-    self.currentammo = self.ammo_shells -= 2;
-    self.attack_finished = time + 2.0;
+    self.currentammo = self.ammo_shells -= 5;
+    self.attack_finished = time + 1.75;
 }

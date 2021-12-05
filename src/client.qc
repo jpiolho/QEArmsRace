@@ -1330,8 +1330,15 @@ void(entity targ, entity attacker) ClientObituary =
 				}
 				if (rnum == IT_SHOTGUN)
 				{
-					deathstring = " chewed on ";
-					deathstring2 = "'s boomstick\n";
+					if(attacker.specialweapon == ARW_ACID_SPITTER)
+					{
+						deathstring = " flesh separated from their bones thanks to ";
+						deathstring2 = "\n";
+					}
+					else {
+						deathstring = " chewed on ";
+						deathstring2 = "'s boomstick\n";
+					}
 				}
 				if (rnum == IT_SUPER_SHOTGUN)
 				{

@@ -853,6 +853,8 @@ float() W_BestWeapon =
 {
 	local	float	it;
 
+	self.items -= self.items & IT_AXE;
+
 	it = self.items;
 
 	if (self.waterlevel <= 1 && self.ammo_cells >= 1 && (it & IT_LIGHTNING) )
@@ -865,6 +867,10 @@ float() W_BestWeapon =
 		return IT_NAILGUN;
 	if(self.ammo_shells >= 1 && (it & IT_SHOTGUN) )
 		return IT_SHOTGUN;
+
+	if(!(it & IT_AXE))
+		self.items |= IT_AXE;
+
 	return IT_AXE;
 };
 
@@ -877,7 +883,6 @@ float() W_CheckNoAmmo =
 		return TRUE;
 
 	self.weapon = W_BestWeapon ();
-
 	W_SetCurrentAmmo ();
 
 // drop the weapon down
@@ -928,6 +933,11 @@ void() W_Attack =
 
 	makevectors	(self.v_angle);			// calculate forward angle for velocity
 	self.show_hostile = time + 1;	// wake monsters up
+
+	if(self.weapon == IT_AXE) {
+		W_FireAxeWeapon();
+		return;
+	}
 
 	// Call the attack function
 	if(self.attackfunc != SUB_Null)

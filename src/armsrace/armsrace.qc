@@ -59,12 +59,12 @@ void(entity player) ArmsRace_GiveWeaponsToPlayer =
     player.ammo_cells = 200;
     player.ammo_rockets = 100;
     player.ammo_nails = 200;
-    player.ammo_shells = 100;
+    player.ammo_shells = 200;
 
     remove(wep);
 }
 
-void(entity() callback) Armsrace_AddLevel = 
+void(entity() callback) Armsrace_AddLevel =
 {
     armsrace_levels[armsrace_totalLevels++] = callback;
 }
@@ -72,12 +72,12 @@ void(entity() callback) Armsrace_AddLevel =
 void() Armsrace_Initialize =
 {
     local float weaponSet = cvar("saved1");
-    
-    
+
+
     armsrace_totalLevels = 0;
 
-    
-    
+
+
     if(weaponSet == 0) {
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_LightningGun));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_RocketLauncher));
@@ -95,6 +95,7 @@ void() Armsrace_Initialize =
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_GrenadeLauncher));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Laser));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperNailgun));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_AcidSpitter));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Nailgun));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperShotgun));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Shotgun));
@@ -112,7 +113,7 @@ void() Armsrace_Initialize =
     else if(weaponSet == 3) {
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_AcidSpitter));
     }
-    
+
 }
 
 
@@ -136,7 +137,7 @@ void(entity player,float level) ArmsRace_LevelUp =
     if(level == armsrace_totalLevels)
     {
         bprint(player.netname);
-        bprint(" scored the winning kill!\n");   
+        bprint(" scored the winning kill!\n");
 
         NextLevel();
         return;
