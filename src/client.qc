@@ -558,6 +558,7 @@ void() PutClientInServer =
 	self.invincible_time = 1;
 	self.invincible_finished = time + 3;
 	self.cnt |= PEFL_IGNORE_NEXT_INVULNERABILITY_MESSAGE;
+	self.alpha = 0.25;
 
 	ArmsRace_PrintSpawnMessage(self);
 
@@ -1064,6 +1065,8 @@ void() CheckPowerups =
 			self.items = self.items - IT_INVULNERABILITY;
 			self.invincible_time = 0;
 			self.invincible_finished = 0;
+
+			self.alpha = 1.0;
 		}
 		if (self.invincible_finished > time)
 			self.effects = self.effects | EF_DIMLIGHT;
