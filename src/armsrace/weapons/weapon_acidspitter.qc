@@ -4,5 +4,5 @@ void() SW_AcidSpitter
 
     player_shot1();
 
-    
+
 }

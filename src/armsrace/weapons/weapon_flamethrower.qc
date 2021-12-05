@@ -38,7 +38,7 @@ void() Flame_Think =
 }
 
 void() Flame_Touch =
-{	
+{
 	if (other == self.owner)
 		return;		// don't explode on owner
 
@@ -47,35 +47,35 @@ void() Flame_Touch =
 		remove(self);
 		return;
 	}
-	
-	
+
+
 	if (other.health)
 	{
         Flame_DoDamage(other,TRUE);
 	}
-	
-	remove(self);	
+
+	remove(self);
 }
 
 void() SW_FireFlameThrower =
 {
     self.punchangle_x = -2;
-    
+
     player_rocket1();
     self.attack_finished = time + 0.15;
-    
+
     self.currentammo = --self.ammo_rockets;
-    
-    
+
+
     newmis = spawn();
-    
+
     newmis.owner = self;
     newmis.movetype = MOVETYPE_FLYMISSILE;
     newmis.solid = SOLID_BBOX;
     newmis.effects = EF_DIMLIGHT;
 
     setmodel(newmis, "progs/s_explod.spr");
-    setsize (newmis, '0 0 0','0 0 0');		
+    setsize (newmis, '0 0 0','0 0 0');
 
     setorigin (newmis, self.origin + v_forward*8 + '0 0 16');
 
