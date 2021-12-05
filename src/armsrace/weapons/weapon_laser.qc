@@ -6,12 +6,12 @@ void() SW_FireLaser =
     self.punchangle_x = -2;
 
     sound (self, CHAN_WEAPON, "enforcer/enfire.wav", 1, ATTN_NORM);
-    
+
     local float i;
     for(i=0;i<3;i++) {
         if(self.ammo_cells <= 0)
             break;
-        
+
         self.currentammo = --self.ammo_cells;
 
         newmis = spawn();
@@ -21,13 +21,13 @@ void() SW_FireLaser =
         newmis.effects = EF_DIMLIGHT;
 
         setmodel (newmis, "progs/laser.mdl");
-        setsize (newmis, '0 0 0', '0 0 0');		
+        setsize (newmis, '0 0 0', '0 0 0');
 
         local vector sumVec = v_right * ((i * 4) - 4);
         setorigin (newmis, self.origin + v_forward*8 + '0 0 16' + sumVec);
 
         makevectors (self.v_angle);
-        newmis.velocity = aim(self, 1000);
+        newmis.velocity = aim(self, 1000) + (v_right * ((i-1) * 0.05));
         newmis.velocity *= 800;
         newmis.angles = vectoangles(newmis.velocity);
 
