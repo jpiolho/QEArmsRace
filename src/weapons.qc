@@ -58,7 +58,7 @@ void() W_FireAxe =
 
 	if (trace_ent.takedamage)
 	{
-		local float dmg = ArmsRace_GetPlayerLevel(self) == 7 ? 40 : 20;
+		local float dmg = ArmsRace_GetPlayerLevel(self) == 7 ? 80 : 20;
 		trace_ent.axhitme = 1;
 		SpawnBlood (org, '0 0 0', dmg);
 		T_Damage (trace_ent, self, self, dmg);
