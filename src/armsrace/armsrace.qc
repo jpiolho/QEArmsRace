@@ -13,6 +13,8 @@ void() ArmsRace_Precache =
     precache_model ("progs/laser.mdl");
 
     precache_sound ("buttons/airbut1.wav");
+
+    precache_sound ("wizard/hit.wav");
 }
 
 float() ArmsRace_KillsPerLevel =
@@ -106,6 +108,9 @@ void() Armsrace_Initialize =
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Nailgun));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperShotgun));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Shotgun));
+    }
+    else if(weaponSet == 3) {
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_AcidSpitter));
     }
     
 }

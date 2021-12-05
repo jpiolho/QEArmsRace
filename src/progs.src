@@ -42,5 +42,6 @@ oldone.qc		// registered
 
 armsrace/weapons/weapon_laser.qc
 armsrace/weapons/weapon_flamethrower.qc
+armsrace/weapons/weapon_acidspitter.qc
 armsrace/armsrace_weapons.qc
 armsrace/armsrace.qc
