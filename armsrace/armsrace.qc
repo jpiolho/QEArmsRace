@@ -52,6 +52,7 @@ void(entity player) ArmsRace_GiveWeaponsToPlayer =
     player.items |= wep.items;
     player.weapon = wep.items;
     player.specialweapon |= wep.specialweapon;
+    player.attackfunc = wep.attackfunc;
 
     player.ammo_cells = 200;
     player.ammo_rockets = 100;

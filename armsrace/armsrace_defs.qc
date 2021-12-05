@@ -1,4 +1,5 @@
 #define specialweapon lip
+#define attackfunc blocked
 
 float PEFL_SEEN_INTRO_MESSAGE = 1;
 float PEFL_IGNORE_NEXT_INVULNERABILITY_MESSAGE = 2;
@@ -16,6 +17,7 @@ float ARW_LIGHTING_GUN = 7;
 
 float ARW_LASER = 8;
 float ARW_FLAME_THROWER = 9;
+float ARW_ACID_SPITTER = 10;
 
 
 

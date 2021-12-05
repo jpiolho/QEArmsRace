@@ -6,6 +6,15 @@ void(entity bomb, entity attacker, float rad, entity ignore, float onlyUnderwate
 void(vector org, vector vel, float damage) SpawnBlood;
 void() SuperDamageSound;
 
+void()	player_axe1;
+void()	player_axeb1;
+void()	player_axec1;
+void()	player_axed1;
+void()	player_shot1;
+void()	player_nail1;
+void()	player_light1;
+void()	player_rocket1;
+
 
 // called by worldspawn
 void() W_Precache =
@@ -266,6 +275,8 @@ void() W_FireShotgun =
 {
 	local vector dir;
 
+	player_shot1 ();
+
 	sound (self, CHAN_WEAPON, "weapons/guncock.wav", 1, ATTN_NORM);	
 
 	self.punchangle_x = -2;
@@ -273,6 +284,8 @@ void() W_FireShotgun =
 	self.currentammo = self.ammo_shells = self.ammo_shells - 1;
 	dir = aim (self, 100000);
 	FireBullets (6, dir, '0.04 0.04 0');
+
+	self.attack_finished = time + 0.5;
 };
 
 
@@ -285,11 +298,15 @@ void() W_FireSuperShotgun =
 {
 	local vector dir;
 
+	
 	if (self.currentammo == 1)
 	{
 		W_FireShotgun ();
 		return;
 	}
+
+	player_shot1 ();
+	self.attack_finished = time + 0.7;
 		
 	sound (self ,CHAN_WEAPON, "weapons/shotgn2.wav", 1, ATTN_NORM);	
 
@@ -375,6 +392,8 @@ void() W_FireRocket =
 {
 	local	entity missile;
 	
+	player_rocket1();
+
 	self.currentammo = self.ammo_rockets = self.ammo_rockets - 1;
 	
 	sound (self, CHAN_WEAPON, "weapons/sgun1.wav", 1, ATTN_NORM);
@@ -403,6 +422,9 @@ void() W_FireRocket =
 	setmodel (missile, "progs/missile.mdl");
 	setsize (missile, '0 0 0', '0 0 0');		
 	setorigin (missile, self.origin + v_forward*8 + '0 0 16');
+
+	
+	self.attack_finished = time + 0.8;
 };
 
 /*
@@ -551,6 +573,8 @@ void() W_FireGrenade =
 {
 	local	entity missile;
 	
+	player_rocket1();
+
 	self.currentammo = self.ammo_rockets = self.ammo_rockets - 1;
 	
 	sound (self, CHAN_WEAPON, "weapons/grenade.wav", 1, ATTN_NORM);
@@ -589,6 +613,9 @@ void() W_FireGrenade =
 	setmodel (missile, "progs/grenade.mdl");
 	setsize (missile, '0 0 0', '0 0 0');		
 	setorigin (missile, self.origin);
+
+
+	self.attack_finished = time + 0.6;
 };
 
 
@@ -856,6 +883,35 @@ float() W_CheckNoAmmo =
 	return FALSE;
 };
 
+
+void() W_FireAxeWeapon =
+{
+	sound (self, CHAN_WEAPON, "weapons/ax1.wav", 1, ATTN_NORM);
+	local float r = random();
+	if (r < 0.25)
+		player_axe1 ();
+	else if (r<0.5)
+		player_axeb1 ();
+	else if (r<0.75)
+		player_axec1 ();
+	else
+		player_axed1 ();
+	self.attack_finished = time + 0.5;
+}
+
+
+void() W_FireNailgun =
+{
+	player_nail1 ();
+}
+
+void() W_FireLightningGun =
+{
+	player_light1();
+	self.attack_finished = time + 0.1;
+	sound (self, CHAN_AUTO, "weapons/lstart.wav", 1, ATTN_NORM);
+}
+
 /*
 ============
 W_Attack
@@ -863,92 +919,18 @@ W_Attack
 An attack impulse can be triggered now
 ============
 */
-void()	player_axe1;
-void()	player_axeb1;
-void()	player_axec1;
-void()	player_axed1;
-void()	player_shot1;
-void()	player_nail1;
-void()	player_light1;
-void()	player_rocket1;
 
 void() W_Attack =
 {
-	local	float	r;
-
 	if (!W_CheckNoAmmo ())
 		return;
 
 	makevectors	(self.v_angle);			// calculate forward angle for velocity
 	self.show_hostile = time + 1;	// wake monsters up
 
-	if (self.weapon == IT_AXE)
-	{
-		sound (self, CHAN_WEAPON, "weapons/ax1.wav", 1, ATTN_NORM);
-		r = random();
-		if (r < 0.25)
-			player_axe1 ();
-		else if (r<0.5)
-			player_axeb1 ();
-		else if (r<0.75)
-			player_axec1 ();
-		else
-			player_axed1 ();
-		self.attack_finished = time + 0.5;
-	}
-	else if (self.weapon == IT_SHOTGUN)
-	{
-		player_shot1 ();
-		W_FireShotgun ();
-		self.attack_finished = time + 0.5;
-	}
-	else if (self.weapon == IT_SUPER_SHOTGUN)
-	{
-		player_shot1 ();
-		W_FireSuperShotgun ();
-		self.attack_finished = time + 0.7;
-	}
-	else if (self.weapon == IT_NAILGUN)
-	{
-		player_nail1 ();
-	}
-	else if (self.weapon == IT_SUPER_NAILGUN)
-	{
-		player_nail1 ();
-	}
-	else if (self.weapon == IT_GRENADE_LAUNCHER)
-	{
-		player_rocket1();
-
-		if(self.specialweapon == ARW_FLAME_THROWER)
-		{
-			SW_FireFlameThrower();
-			self.attack_finished = time + 0.15;
-		}
-		else {
-			W_FireGrenade();
-			self.attack_finished = time + 0.6;
-		}
-	}
-	else if (self.weapon == IT_ROCKET_LAUNCHER)
-	{
-		player_rocket1();
-		W_FireRocket();
-		self.attack_finished = time + 0.8;
-	}
-	else if (self.weapon == IT_LIGHTNING)
-	{
-		if(self.specialweapon == ARW_LASER)
-		{
-			SW_FireLaser();
-			self.attack_finished = time + 0.25;
-		}
-		else {
-			player_light1();
-			self.attack_finished = time + 0.1;
-			sound (self, CHAN_AUTO, "weapons/lstart.wav", 1, ATTN_NORM);
-		}
-	}
+	// Call the attack function
+	if(self.attackfunc != SUB_Null)
+		self.attackfunc();
 };
 
 /*
