@@ -81,7 +81,7 @@ void() SW_FireFlameThrower =
 
     makevectors (self.v_angle);
     newmis.velocity = aim(self, 1000);
-    newmis.velocity *= 500;
+    newmis.velocity *= 650;
     newmis.angles = vectoangles(newmis.velocity);
 
     newmis.nextthink = time + 0.1;
