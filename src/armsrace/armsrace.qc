@@ -89,6 +89,7 @@ void() Armsrace_Initialize =
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Axe));
     }
     else if(weaponSet == 1) {
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Railgun));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_LightningGun));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_RocketLauncher));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_GrenadeLauncher));
@@ -111,7 +112,7 @@ void() Armsrace_Initialize =
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Shotgun));
     }
     else if(weaponSet == 3) {
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Flamethrower));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Railgun));
     }
 
 }

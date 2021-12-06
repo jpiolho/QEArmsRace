@@ -18,6 +18,7 @@ float ARW_LIGHTING_GUN = 7;
 float ARW_LASER = 8;
 float ARW_FLAME_THROWER = 9;
 float ARW_ACID_SPITTER = 10;
+float ARW_RAILGUN = 11;
 
 
 

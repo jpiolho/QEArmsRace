@@ -1374,13 +1374,26 @@ void(entity targ, entity attacker) ClientObituary =
 				}
 				if (rnum == IT_ROCKET_LAUNCHER)
 				{
-					deathstring = " rides ";
-					deathstring2 = "'s rocket\n";
-					if (targ.health < -40)
+					if(attacker.specialweapon == ARW_RAILGUN)
 					{
-						deathstring = " was gibbed by ";
-						deathstring2 = "'s rocket\n" ;
+						deathstring = " got a shock from ";
+						deathstring2 = "'s railgun ray\n";
+
+						if(targ.health < -40) {
+							deathstring = " was obliterated by ";
+							deathstring2 = "'s railgun ray\n";
+						}
 					}
+					else {
+						deathstring = " rides ";
+						deathstring2 = "'s rocket\n";
+						if (targ.health < -40)
+						{
+							deathstring = " was gibbed by ";
+							deathstring2 = "'s rocket\n" ;
+						}
+					}
+
 				}
 				if (rnum == IT_LIGHTNING)
 				{
