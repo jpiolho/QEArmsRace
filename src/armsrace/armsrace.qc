@@ -91,12 +91,12 @@ void() Armsrace_Initialize =
     else if(weaponSet == 1) {
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_LightningGun));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_RocketLauncher));
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Flamethrower));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_GrenadeLauncher));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Laser));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperNailgun));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_AcidSpitter));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Nailgun));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Flamethrower));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperShotgun));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Shotgun));
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Axe));
@@ -111,7 +111,7 @@ void() Armsrace_Initialize =
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Shotgun));
     }
     else if(weaponSet == 3) {
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_AcidSpitter));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Flamethrower));
     }
 
 }
