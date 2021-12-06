@@ -5,6 +5,8 @@ void() SW_FireLaser =
 
     self.punchangle_x = -2;
 
+    player_sw_laser1();
+
     sound (self, CHAN_WEAPON, "enforcer/enfire.wav", 1, ATTN_NORM);
 
     local float i;

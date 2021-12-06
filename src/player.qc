@@ -355,6 +355,14 @@ void() player_died1;
 void() player_diee1;
 void() player_die_ax1;
 
+void() player_sw_laser1   =[$light1, player_sw_laser2  ] {
+    self.weaponframe = 1;
+    self.effects = self.effects | EF_MUZZLEFLASH;
+};
+void() player_sw_laser2   =[$light2, player_sw_laser3  ] { self.weaponframe = 2; }
+void() player_sw_laser3   =[$light2, player_sw_laser4  ] { self.weaponframe = 3; }
+void() player_sw_laser4   =[$light2, player_run  ] { self.weaponframe = 4; }
+
 void() DeathBubblesSpawn =
 {
 local entity	bubble;
