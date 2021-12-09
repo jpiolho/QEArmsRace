@@ -47,3 +47,6 @@ armsrace/weapons/weapon_acidspitter.qc
 armsrace/weapons/weapon_railgun.qc
 armsrace/armsrace_weapons.qc
 armsrace/armsrace.qc
+
+// Addons
+addon_mapcycler.qc

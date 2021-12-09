@@ -148,31 +148,13 @@ entity() FindIntermission =
 };
 
 
-float changingMap;
 string nextmap;
-
-void() ActualGotoNextMap =
+void() GotoNextMap =
 {
 	if (cvar("samelevel"))	// if samelevel is set, stay on same level
 		changelevel (mapname);
 	else
 		changelevel (nextmap);
-};
-
-void() GotoNextMap =
-{
-	if(!changingMap) {
-		// Execute nextmap alias, if available
-		localcmd("nextmap_");
-		localcmd(mapname);
-		localcmd("\n");
-
-		changingMap = TRUE;
-
-		local entity ent = spawn();
-		ent.think = ActualGotoNextMap;
-		ent.nextthink = time + 0.25;
-	}
 };
 
 
