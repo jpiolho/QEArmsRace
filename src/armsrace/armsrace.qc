@@ -112,7 +112,7 @@ void() Armsrace_Initialize =
         Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Shotgun));
     }
     else if(weaponSet == 3) {
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Railgun));
+        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_AcidSpitter));
     }
 
 }

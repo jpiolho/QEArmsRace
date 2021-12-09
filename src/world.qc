@@ -345,6 +345,8 @@ void() worldspawn =
 
 void() StartFrame =
 {
+	particleCountThisFrame = 0;
+
 	teamplay = cvar("teamplay");
 	skill = cvar("skill");
 	framecount = framecount + 1;

@@ -41,7 +41,7 @@ void() AcidSpitter_Spit_Landed_Think =
         local vector v = self.origin;
         v += (v_forward * 5) + (crandom() * v_right * 10) + (crandom() * v_up * 10);
         //v += self.finalangle * crandom() * 10;
-        particle(v,self.finalangle,63,4);
+        managed_particle(v,self.finalangle,63,4);
     }
     self.nextthink = time + 0.15;
 
@@ -83,7 +83,7 @@ void() AcidSpitter_Spit_Touch =
 
 void() AcidSpitter_Spit_Think =
 {
-    particle(self.origin,'0 0 0',63,8);
+    managed_particle(self.origin,'0 0 0',63,8);
 
     self.nextthink = time + 0.05;
 
