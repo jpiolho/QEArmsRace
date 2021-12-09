@@ -31,3 +31,18 @@ __wrap void() GotoNextMap =
     ent.think = prior;
     ent.nextthink = time + 0.25;
 }
+
+__wrap void() NextLevel =
+{
+    local entity o = find(world, classname, "trigger_changelevel");
+
+    // Create a fake trigger changelevel if it doesn't exist
+    if(!o)
+    {
+        o = spawn();
+        o.classname = "trigger_changelevel";
+        o.map = "start";
+    }
+
+    prior();
+}
