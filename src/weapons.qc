@@ -38,6 +38,21 @@ float() crandom =
 	return 2*(random() - 0.5);
 };
 
+void() W_FireAxeWeapon =
+{
+	sound (self, CHAN_WEAPON, "weapons/ax1.wav", 1, ATTN_NORM);
+	local float r = random();
+	if (r < 0.25)
+		player_axe1 ();
+	else if (r<0.5)
+		player_axeb1 ();
+	else if (r<0.75)
+		player_axec1 ();
+	else
+		player_axed1 ();
+	self.attack_finished = time + 0.5;
+}
+
 /*
 ================
 W_FireAxe
@@ -59,7 +74,7 @@ void() W_FireAxe =
 
 	if (trace_ent.takedamage)
 	{
-		local float dmg = ArmsRace_GetPlayerLevel(self) == (armsrace_totalLevels-1) ? 80 : 20;
+		local float dmg = self.attackfunc == W_FireAxeWeapon ? 80 : 20;
 		trace_ent.axhitme = 1;
 		SpawnBlood (org, '0 0 0', dmg);
 		T_Damage (trace_ent, self, self, dmg);
@@ -890,20 +905,7 @@ float() W_CheckNoAmmo =
 };
 
 
-void() W_FireAxeWeapon =
-{
-	sound (self, CHAN_WEAPON, "weapons/ax1.wav", 1, ATTN_NORM);
-	local float r = random();
-	if (r < 0.25)
-		player_axe1 ();
-	else if (r<0.5)
-		player_axeb1 ();
-	else if (r<0.75)
-		player_axec1 ();
-	else
-		player_axed1 ();
-	self.attack_finished = time + 0.5;
-}
+
 
 
 void() W_FireNailgun =
