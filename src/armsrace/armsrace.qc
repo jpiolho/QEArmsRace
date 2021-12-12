@@ -77,42 +77,66 @@ void() Armsrace_Initialize =
     armsrace_totalLevels = 0;
 
 
+    switch(weaponSet) {
+        default:
+        case 0:
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_LightningGun));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_RocketLauncher));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_GrenadeLauncher));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperNailgun));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Nailgun));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperShotgun));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Shotgun));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Axe));
+            break;
 
-    if(weaponSet == 0) {
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_LightningGun));
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_RocketLauncher));
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_GrenadeLauncher));
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperNailgun));
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Nailgun));
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperShotgun));
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Shotgun));
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Axe));
-    }
-    else if(weaponSet == 1) {
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Railgun));
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_LightningGun));
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_RocketLauncher));
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_GrenadeLauncher));
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Laser));
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperNailgun));
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_AcidSpitter));
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Nailgun));
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Flamethrower));
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperShotgun));
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Shotgun));
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Axe));
-    }
-    else if(weaponSet == 2) {
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_LightningGun));
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_RocketLauncher));
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_GrenadeLauncher));
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperNailgun));
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Nailgun));
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperShotgun));
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Shotgun));
-    }
-    else if(weaponSet == 3) {
-        Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_AcidSpitter));
+        case 1:
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Railgun));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_LightningGun));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_RocketLauncher));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_GrenadeLauncher));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Laser));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperNailgun));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_AcidSpitter));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Nailgun));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Flamethrower));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperShotgun));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Shotgun));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Axe));
+            break;
+
+        case 2:
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_LightningGun));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_RocketLauncher));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_GrenadeLauncher));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperNailgun));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Nailgun));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperShotgun));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Shotgun));
+            break;
+
+        case 3:
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Axe));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Shotgun));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperShotgun));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Nailgun));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_SuperNailgun));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_GrenadeLauncher));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_RocketLauncher));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_LightningGun));
+            break;
+
+        case 4:
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Railgun));
+            break;
+
+        case 5:
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Railgun));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Laser));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_AcidSpitter));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Flamethrower));
+            Armsrace_AddLevel(ARMSRACE_WEAPON(Weapon_Axe));
+            break;
     }
 
 }
