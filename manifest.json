@@ -1,0 +1,11 @@
+{
+	"name": "QE Arms Race",
+	"author": "JPiolho",
+	"date": "12/12/2021",
+	"description": "This is a multiplayer deathmatch mod that adds a gameplay similar to CSGO Arms Race, where you go from powerful weapons all the way down to weakest.\nThe last person to score a kill after the last weapon level wins the game.\n\nCustom weapons are available and there is multiple weapon sets you can choose from.\n\nChange weapon sets with the 'saved1' cvar.\nChange kills per level with the 'saved4' cvar.",
+	"gamedir": "id1",
+	"screenshots": [],
+	
+	"download": "QEArmsRace_v1.1.0.zip",
+	"pak": "pak0.pak"
+}
