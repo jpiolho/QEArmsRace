@@ -1417,6 +1417,7 @@ void() BackpackTouch =
 	self = other;
 	
 	// change to the weapon
+	/*
 	if(W_WantsToChangeWeapon(other, old, other.items) == 1)
 	{
 		if (self.flags & FL_INWATER)
@@ -1432,6 +1433,7 @@ void() BackpackTouch =
 			Deathmatch_Weapon (old, new);
 		}
 	}
+	*/
 
 	W_SetCurrentAmmo ();
 };
