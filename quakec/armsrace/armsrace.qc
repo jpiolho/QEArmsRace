@@ -179,10 +179,10 @@ void(entity player,float level) ArmsRace_LevelUp =
     }
 
     if(level != (armsrace_totalLevels-1)) {
-        centerprint(player,"You are now level ",ftos(level+1),"!\n",ArmsRace_GetLevelName(level));
+        centerprint(player,"You are now level {}!\n{}",ftos(level+1),ArmsRace_GetLevelName(level));
     }
     else {
-        centerprint(player,"You are now level ",ftos(level+1),"!\n",ArmsRace_GetLevelName(level),"\n\nLast level!");
+        centerprint(player,"You are now level {}!\n{}\n\nLast level!",ftos(level+1),ArmsRace_GetLevelName(level));
     }
 
     sound(player, CHAN_VOICE, "misc/medkey.wav",1, ATTN_IDLE);
